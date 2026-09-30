@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function TodoList() {
     let [todos, setTodos] = useState([
-        { task: "sample-task", id: uuidv4() }
+        { task: "sample-task", id: uuidv4(), isDone: false }
     ]);
 
     let [newTodo, setNewTodo] = useState("");
@@ -11,7 +11,7 @@ export default function TodoList() {
     let addTask = () => {
         setTodos([
             ...todos,
-            { task: newTodo, id: uuidv4() }
+            { task: newTodo, id: uuidv4(), isDone: false }
         ]);
 
         setNewTodo("");
@@ -19,7 +19,7 @@ export default function TodoList() {
 
     let deleteTodo = (id) => {
         setTodos((todos) =>
-            todos.filter((todo) => todo.id != id)
+            todos.filter((todo) => todo.id !== id)
         );
     };
 
@@ -29,6 +29,7 @@ export default function TodoList() {
                 return {
                     ...todo,
                     task: todo.task.toUpperCase(),
+                    isDone: true,
                 }
             })
         )
@@ -41,6 +42,7 @@ export default function TodoList() {
                     return {
                         ...todo,
                         task: todo.task.toUpperCase(),
+                        isDone: true,
                     }
                 } else {
                     return todo
@@ -67,17 +69,37 @@ export default function TodoList() {
             <ul>
                 {todos.map((todo) => (
                     <li key={todo.id}>
+
                         {todo.task}
-                        <button onClick={() => deleteTodo(todo.id)}>
+
+                        <button
+                            onClick={() => deleteTodo(todo.id)}
+                        >
                             Delete
                         </button>
-                        <button onClick={() => upperCaseOne(todo.id)}>
+
+                        <button
+                            onClick={() => upperCaseOne(todo.id)}
+                            style={todo.isDone ? {
+                                backgroundColor: "green",
+                                color: "white"
+                            } : {}}
+                        >
                             CAPS
                         </button>
+
                     </li>
                 ))}
             </ul>
-            <button onClick={upperCaseAll}>UpperCase All</button>
+            <button
+                onClick={upperCaseAll}
+                style={todos.every((todo) => todo.isDone) ? {
+                    backgroundColor: "green",
+                    color: "white"
+                } : {}}
+            >
+                UpperCase All
+            </button>
         </div>
     );
 }
