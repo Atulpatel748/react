@@ -1,0 +1,38 @@
+.Lottery {
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 24px 20px;
+    border: 2px solid #f3d9ff;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff7ff, #f3f0ff);
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(128, 90, 213, 0.12);
+}
+
+.Lottery h1 {
+    margin: 0 0 20px;
+    color: #5a2d82;
+    font-size: 2rem;
+}
+
+.Lottery button {
+    background-color: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.Lottery button:hover {
+    background-color: #6d28d9;
+}
+
+.Lottery-message {
+    min-height: 24px;
+    margin-top: 18px;
+    color: #15803d;
+    font-weight: 700;
+}
