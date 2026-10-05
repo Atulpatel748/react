@@ -9,8 +9,8 @@ export default function CommentsForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
+        setFormData((CurrData) => ({
+            ...CurrData,
             [name]: value,
         }));
     };
@@ -27,17 +27,30 @@ export default function CommentsForm() {
         });
     };
 
+    let handleinputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((CurrData) => ({
+            ...CurrData,
+            [name]: value,
+        }));
+    };
+
+    let handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', formData);
+    };
+
     return (
         <div>
             <h4>Comments Form</h4>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
                 <label htmlFor="username">Username</label>
                 <input
                     id="username"
                     name="username"
                     type="text"
                     value={formData.username}
-                    onChange={handleChange}
+                    onChange={handleinputChange}
                     placeholder="Enter username"
                 />
                 <br />
@@ -47,7 +60,7 @@ export default function CommentsForm() {
                     id="remarks"
                     name="remarks"
                     value={formData.remarks}
-                    onChange={handleChange}
+                    onChange={handleinputChange}
                     placeholder="Add your comments..."
                 />
                 <br />
@@ -60,7 +73,7 @@ export default function CommentsForm() {
                     min={1}
                     max={5}
                     value={formData.rating}
-                    onChange={handleChange}
+                    onChange={handleinputChange}
                 />
                 <br />
 
