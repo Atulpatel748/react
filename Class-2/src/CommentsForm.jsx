@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CommentsForm() {
+export default function CommentsForm({ onAddComment }) {
     const [formData, setFormData] = React.useState({
         username: '',
         remarks: '',
@@ -9,17 +9,29 @@ export default function CommentsForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((CurrData) => ({
-            ...CurrData,
+        setFormData((currData) => ({
+            ...currData,
             [name]: value,
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submitted Data:', formData);
 
-        // Reset form after submission
+        const username = formData.username.trim();
+        const remarks = formData.remarks.trim();
+        const rating = Number(formData.rating);
+
+        if (!username || !remarks || !Number.isFinite(rating)) {
+            return;
+        }
+
+        onAddComment?.({
+            username,
+            remarks,
+            rating,
+        });
+
         setFormData({
             username: '',
             remarks: '',
@@ -27,31 +39,19 @@ export default function CommentsForm() {
         });
     };
 
-    let handleinputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((CurrData) => ({
-            ...CurrData,
-            [name]: value,
-        }));
-    };
-
-    let handleFormSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:', formData);
-    };
-
     return (
         <div>
             <h4>Comments Form</h4>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
                 <input
                     id="username"
                     name="username"
                     type="text"
                     value={formData.username}
-                    onChange={handleinputChange}
+                    onChange={handleChange}
                     placeholder="Enter username"
+                    required
                 />
                 <br />
 
@@ -60,8 +60,9 @@ export default function CommentsForm() {
                     id="remarks"
                     name="remarks"
                     value={formData.remarks}
-                    onChange={handleinputChange}
+                    onChange={handleChange}
                     placeholder="Add your comments..."
+                    required
                 />
                 <br />
 
@@ -73,7 +74,8 @@ export default function CommentsForm() {
                     min={1}
                     max={5}
                     value={formData.rating}
-                    onChange={handleinputChange}
+                    onChange={handleChange}
+                    required
                 />
                 <br />
 
